@@ -23,10 +23,11 @@ function App() {
   const guesses = 10;
   const answer: number[] = [];
   
-  useMemo(() => {
+  const randomAnswer = useMemo(() => {
     for (let i=0; i< 4; i++) {
       answer.push(Math.floor(Math.random()*10));
     }
+    return answer;
   }, [])
   
 
@@ -44,7 +45,7 @@ function App() {
           .map((num, index) => 
         <NumberLayout 
           key={index} 
-          answer={answer}
+          answer={randomAnswer}
           addGuess={addGuess}></NumberLayout>
       )
       }
