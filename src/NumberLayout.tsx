@@ -4,7 +4,8 @@ import './App.css'
 interface Props {
   answer: number[],
   setCorrectGuess: React.Dispatch<React.SetStateAction<boolean>>,
-  setNumberOfGuess: React.Dispatch<React.SetStateAction<number>>,
+  addGuess: any
+  // setNumberOfGuess: React.Dispatch<React.SetStateAction<number>>,
 }
 
 const NumberLayout = (props: Props) => {
@@ -66,7 +67,7 @@ const NumberLayout = (props: Props) => {
     if (positionCount==4) props.setCorrectGuess(true);
 
     setIsSubmitted(true);
-    props.setNumberOfGuess(current => current + 1);
+    props.addGuess();
   }
 
   return (

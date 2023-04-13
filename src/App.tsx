@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import './App.css'
 import NumberLayout from './NumberLayout'
 
@@ -14,11 +14,20 @@ function App() {
   }, [correctGuess])
 
   useEffect(() => {
-    if (numberOfGuess == guesses ) {
+    if (numberOfGuess == 2 ) {
       alert('Game Over!')
       window.location.reload();
     }
   }, [numberOfGuess])
+
+  const addGuess = useCallback(
+    () => {
+      console.log('guessing')
+      // setNumberOfGuess(current => current + 1)
+    },
+    [numberOfGuess],
+  )
+  
 
   const guesses = 10;
   const answer: number[] = [];
@@ -50,7 +59,7 @@ function App() {
           key={index} 
           answer={answer} 
           setCorrectGuess={setCorrectGuess}
-          setNumberOfGuess={setNumberOfGuess}></NumberLayout>
+          addGuess={addGuess}></NumberLayout>
       )
       }
     </div>
