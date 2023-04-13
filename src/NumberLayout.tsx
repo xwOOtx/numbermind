@@ -3,7 +3,6 @@ import './App.css'
 
 interface Props {
   answer: number[],
-  setCorrectGuess: React.Dispatch<React.SetStateAction<boolean>>,
   addGuess: any
   // setNumberOfGuess: React.Dispatch<React.SetStateAction<number>>,
 }
@@ -64,7 +63,10 @@ const NumberLayout = (props: Props) => {
     }
     setCorrectPosition(positionCount);
     
-    if (positionCount==4) props.setCorrectGuess(true);
+    if (positionCount==4) {
+      alert(`Congratulations! You have guessed the number ${answer.join("")} correctly!`)
+      window.location.reload();
+    }
 
     setIsSubmitted(true);
     props.addGuess();
