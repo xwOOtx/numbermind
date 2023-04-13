@@ -1,18 +1,24 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import NumberLayout from './NumberLayout'
 
 function App() {
   const [correctGuess, setCorrectGuess] = useState(false);
+  const [numberOfGuess, setNumberOfGuess] = useState(0);
+
   useEffect(() => {
     if (correctGuess) {
       alert('Congratulations! You have guess correctly!')
       window.location.reload();
     }
   }, [correctGuess])
-  
+
+  useEffect(() => {
+    if (numberOfGuess == guesses ) {
+      alert('Game Over!')
+      window.location.reload();
+    }
+  }, [numberOfGuess])
 
   const guesses = 10;
   const answer: number[] = [];
@@ -40,7 +46,11 @@ function App() {
         Array(guesses)
           .fill(0)
           .map((num, index) => 
-        <NumberLayout key={index} answer={answer} setCorrectGuess={setCorrectGuess}></NumberLayout>
+        <NumberLayout 
+          key={index} 
+          answer={answer} 
+          setCorrectGuess={setCorrectGuess}
+          setNumberOfGuess={setNumberOfGuess}></NumberLayout>
       )
       }
     </div>

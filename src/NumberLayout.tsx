@@ -3,7 +3,8 @@ import './App.css'
 
 interface Props {
   answer: number[],
-  setCorrectGuess: React.Dispatch<React.SetStateAction<boolean>>
+  setCorrectGuess: React.Dispatch<React.SetStateAction<boolean>>,
+  setNumberOfGuess: React.Dispatch<React.SetStateAction<number>>,
 }
 
 const NumberLayout = (props: Props) => {
@@ -35,7 +36,6 @@ const NumberLayout = (props: Props) => {
     let numberCount = 0;
     const correctNumberArray = [...answer];
 
-
     const guessArray = [inputOne, inputTwo, inputThree, inputFour];
     const allFalsy = guessArray.includes(undefined);
     if (allFalsy) {
@@ -66,6 +66,7 @@ const NumberLayout = (props: Props) => {
     if (positionCount==4) props.setCorrectGuess(true);
 
     setIsSubmitted(true);
+    props.setNumberOfGuess(current => current + 1);
   }
 
   return (
