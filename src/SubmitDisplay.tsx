@@ -71,7 +71,12 @@ const SubmitDisplay = (props: Props) => {
 
   return (
     <div className='display'>
-        <div className='numberInput'>
+      <h2> Rules </h2>
+      <p>
+        Guess the 4 digit number within 10 tries.
+      </p>
+      <br/>
+      <div className='numberInput'>
         <input name="inputOne" maxLength={1} onChange={onInputOneChange} value={inputOne}></input>
         <input name='inputTwo' maxLength={1} onChange={onInputTwoChange} value={inputTwo}></input>
         <input name='inputThree' maxLength={1} onChange={onInputThreeChange} value={inputThree}></input>
