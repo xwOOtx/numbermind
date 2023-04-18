@@ -10,6 +10,12 @@
   height: 100%;
 }
 
+.startButton {
+  justify-self: center;
+  width: 10%;
+  background-color:royalblue;
+}
+
 .content {
   display: flex;
   gap: 10px;

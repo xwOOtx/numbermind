@@ -5,12 +5,17 @@ import SubmitDisplay from './SubmitDisplay';
 import NumberLayout from './NumberLayout'
 
 function App() {
+  const [startGame, setStartGame] = useState(false);
   const [numberOfGuess, setNumberOfGuess] = useState(0);
   const [submittedAnswer, setSubmittedAnswer] = useState<number[][]>([])
+
+  const guesses = 10;
+  const answer: number[] = [];
 
   useEffect(() => {
     if (numberOfGuess == guesses ) {
       alert('Game Over!')
+      setStartGame(false);
       window.location.reload();
     }
   }, [numberOfGuess])
@@ -29,10 +34,6 @@ function App() {
     [submittedAnswer]
   );
   
-
-  const guesses = 10;
-  const answer: number[] = [];
-  
   const randomAnswer = useMemo(() => {
     for (let i=0; i< 4; i++) {
       answer.push(Math.floor(Math.random()*10));
@@ -40,36 +41,26 @@ function App() {
     return answer;
   }, [])
   
+  const onStartGame = () => {
+    setStartGame(true);
+  }
 
   return (
     <div className='App'>
       <h1>Number Mind</h1>
-      <div className='content'>
+      {
+        startGame ?
+        <div className='content'>
         <GuessDisplay submittedAnswerList= { submittedAnswer }></GuessDisplay>
         <SubmitDisplay
           answer={ randomAnswer }
           onSubmittedAnswer={ submitAnswer }
           onAddGuess={ addGuess }></SubmitDisplay>
-      </div>
+        </div> :
+        <button className='startButton' onClick={onStartGame}>Start Game</button>
+      }
+      
     </div>
-    // <div className="App">
-    //   <h1>Number Mind</h1>
-    //   <div className='title'>
-    //     <h2>Guesses</h2>
-    //     <h3>Correct Number</h3>
-    //     <h3>Correct Position</h3>
-    //   </div>
-    //   {
-    //     Array(guesses)
-    //       .fill(0)
-    //       .map((num, index) => 
-    //     <NumberLayout 
-    //       key={index} 
-    //       answer={randomAnswer}
-    //       addGuess={addGuess}></NumberLayout>
-    //   )
-    //   }
-    // </div>
   )
 }
 
