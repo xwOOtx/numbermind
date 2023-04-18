@@ -9,22 +9,19 @@ interface Props {
 
 const SubmitDisplay = (props: Props) => {
   const answer = props.answer;
-  const [inputOne, setInputOne] = useState<number>();
-  const [inputTwo, setInputTwo] = useState<number>();
-  const [inputThree, setInputThree] = useState<number>();
-  const [inputFour, setInputFour] = useState<number>();
+  const [numArray, setNumArray] = useState<number[]>([]);
   
-  const onInputOneChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputOne(Number(e.target.value.replace(/\D/g, '')));
+  const onNumButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (numArray.length > 4) return;
+    const num = parseInt(e.currentTarget.textContent!);
+    setNumArray(current => [...current, num]);
   }
-  const onInputTwoChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputTwo(Number(e.target.value.replace(/\D/g, '')));
-  }
-  const onInputThreeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputThree(Number(e.target.value.replace(/\D/g, '')));
-  }
-  const onInputFourChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputFour(Number(e.target.value.replace(/\D/g, '')));
+
+  const onDeleteButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (numArray.length === 0) return;
+    const copy = [...numArray]
+    copy.pop();
+    setNumArray(copy);
   }
 
   const submit = () => {
@@ -32,14 +29,12 @@ const SubmitDisplay = (props: Props) => {
     let numberCount = 0;
     const correctNumberArray = [...answer];
 
-    const guessArray = [inputOne, inputTwo, inputThree, inputFour];
-    const allFalsy = guessArray.includes(undefined);
-    if (allFalsy) {
+    if (numArray.length < 4) {
       alert('Invalid input')
       return
     }
 
-    guessArray.map((num) => {
+    numArray.map((num) => {
       if (num == undefined) {
         return
       }
@@ -53,7 +48,7 @@ const SubmitDisplay = (props: Props) => {
     /// check for correct position
     let positionCount = 0;
     for (let i=0; i<4; i++) {
-      if (answer[i] == guessArray[i]) {
+      if (answer[i] == numArray[i]) {
         positionCount++;
       }
     }
@@ -63,10 +58,11 @@ const SubmitDisplay = (props: Props) => {
       window.location.reload();
     }
 
-    const arrayToSubmit = [inputOne, inputTwo, inputThree, inputFour, numberCount, positionCount];
+    const arrayToSubmit = [...numArray, numberCount, positionCount];
 
     props.onSubmittedAnswer(arrayToSubmit)
     props.onAddGuess();
+    setNumArray([]);
   }
 
   return (
@@ -77,11 +73,24 @@ const SubmitDisplay = (props: Props) => {
       </p>
       <br/>
       <div className='numberInput'>
-        <input name="inputOne" maxLength={1} onChange={onInputOneChange} value={inputOne}></input>
-        <input name='inputTwo' maxLength={1} onChange={onInputTwoChange} value={inputTwo}></input>
-        <input name='inputThree' maxLength={1} onChange={onInputThreeChange} value={inputThree}></input>
-        <input name='inputFour' maxLength={1} onChange={onInputFourChange} value={inputFour}></input>
+        <div>{numArray[0]}</div>
+        <div>{numArray[1]}</div>
+        <div>{numArray[2]}</div>
+        <div>{numArray[3]}</div>
         <button onClick={submit}>submit</button>
+      </div>
+      <div className='numPad'>
+        <div className='numButton' onClick={onNumButtonClick}>1</div>
+        <div className='numButton' onClick={onNumButtonClick}>2</div>
+        <div className='numButton' onClick={onNumButtonClick}>3</div>
+        <div className='numButton' onClick={onNumButtonClick}>4</div>
+        <div className='numButton' onClick={onNumButtonClick}>5</div>
+        <div className='numButton' onClick={onNumButtonClick}>6</div>
+        <div className='numButton' onClick={onNumButtonClick}>7</div>
+        <div className='numButton' onClick={onNumButtonClick}>8</div>
+        <div className='numButton' onClick={onNumButtonClick}>9</div>
+        <div className='numButton' onClick={onNumButtonClick}>0</div>
+        <div className='numButton' onClick={onDeleteButtonClick}>X</div>
       </div>
     </div>
   )
